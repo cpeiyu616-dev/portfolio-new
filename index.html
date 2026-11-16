@@ -1,0 +1,1941 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>K's Personal Portfolio</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    html, body {
+      background-color: #0d0d0d;
+      color: #000000;
+      line-height: 2.3;
+      overflow-x: hidden;
+      overflow-y: hidden;
+      height: 100vh;
+    }
+
+    section {
+      width: 100vw;
+      height: 100vh;
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 📌 強制全面套用淺透墨綠色圓點游標 */
+    html, body, section, div, header, nav, main, h1, h2, h3, h4, p, span, b, a, button, video, img,
+    .resume-wrapper, .resume-wrapper:active {
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="%234b7a66" fill-opacity="0.6"/></svg>') 11 11, auto !important;
+    }
+
+    header {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 1rem 3%;           /* 📌 右側留白 5% → 3%：導覽文字整體往右移 */
+      position: fixed;
+      width: 100%;
+      top: 0;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      height: 76px;               /* 📌 遮罩高度 64px → 76px */
+    }
+
+    nav {
+      display: flex;
+      gap: 2.5rem;
+    }
+
+    nav a, nav button {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 350;
+      background: none;
+      border: none;
+      padding: 0;
+      transition: color 0.3s;
+      cursor: pointer;
+    }
+
+    nav a:hover, nav button:hover {
+      color: #b0b0b0;
+    }
+
+    /* ================= 第一頁封面 ================= */
+    .hero-cover {
+      background-color: #0d0d0d;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-watermark-k {
+      position: absolute;
+      top: 40%;
+      left: 70%;
+      transform: translate(-50%, -50%);
+      font-size: 115vw;
+      line-height: 0.5;
+      font-weight: 100;
+      color: rgba(255, 255, 255, 0.075);  /* 📌 浮水印 K 加深 */
+      user-select: none;
+      pointer-events: none;
+      z-index: 1;
+      white-space: nowrap;
+    }
+
+    .cover-center-wrapper {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-top: 150px;
+    }
+
+    .cover-sub-info {
+      position: absolute;           
+      left: 45.5vw;                 
+      top: calc(50% - 50px);        
+      transform: translateY(-50%);  
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      text-align: left;
+      white-space: nowrap; 
+    }
+
+    .cover-sub-info p {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: #fff;
+      letter-spacing: 0.5px;
+    }
+
+    .cover-content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      transform: translateX(-215px);
+      margin-top: 80px; 
+    }
+
+    .cover-my-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 2.0rem;
+      font-weight: 350;
+      color: #aaa;
+      line-height: 1.3;
+      margin-bottom: 0.2rem;
+      letter-spacing: 2px;
+      width: 3rem; 
+    }
+
+    .cover-title {
+      font-size: 13vw;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.1;
+      letter-spacing: 1.5px;
+    }
+
+    /* ================= 履歷頁面 ================= */
+    .resume-section {
+      background-color: #0d0d0d;
+      width: 100vw;
+      height: 100vh;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      padding-top: 76px;
+    }
+
+    .resume-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .resume-wrapper {
+      width: 100%;
+      height: 100%;
+      background: #0d0d0d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .resume-wrapper img {
+      height: 100%;
+      width: auto;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.05s ease-out;
+      transform-origin: center center;
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: auto;
+    }
+
+    .resume-hint {
+      position: absolute;
+      bottom: 20px;
+      right: 30px;
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #aaa;
+      padding: 6px 14px;
+      font-size: 0.78rem;
+      letter-spacing: 1px;
+      backdrop-filter: blur(6px);
+      pointer-events: none;
+      z-index: 10;
+      border-radius: 4px;
+    }
+
+    /* ================= 第二頁：About Me 個人介紹 ================= */
+    .about-section {
+      background-color: #0d0d0d;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      position: relative;
+    }
+
+    .about-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .about-left-group {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 38%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 80px;
+      z-index: 2;
+    }
+
+    .about-photo-wrapper {
+      height: 60.5%;
+      max-height: 500px;
+      background-color: transparent;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .about-photo-wrapper img {
+      height: 100%;
+      width: auto;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(100%) contrast(1.1);
+    }
+
+    .about-right-panel {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 62%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.45);
+      backdrop-filter: blur(10px);
+      padding: 80px 10% 0 10%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #000000;
+      z-index: 1;
+    }
+
+    .about-content-box {
+      width: 100%;
+      max-width: 580px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .about-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      width: 100%;
+      margin-bottom: 2.8rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      padding-bottom: 1.6rem; 
+    }
+
+    .about-name-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .about-name,
+    .about-name .about-name-en {
+      font-family: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", "Heiti TC", sans-serif;
+      color: #000000;
+    }
+
+    .about-name {
+      font-size: 2.1rem;
+      font-weight: 400;
+      letter-spacing: 4px;
+      line-height: 1.3;
+    }
+
+    .about-name .about-name-en {
+      font-size: 1.15rem;
+      font-weight: 300;
+      letter-spacing: 2px;
+      margin-left: 1.2rem;
+    }
+
+    .about-birth {
+      font-size: 0.82rem;
+      color: #000000;
+      font-weight: 300;
+      margin-top: 1rem;
+      letter-spacing: 2px;
+      line-height: 1.6;
+      opacity: 0.7;
+    }
+
+    .about-contact-info {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .about-contact-info p {
+      font-size: 0.88rem;
+      color: #000000;
+      font-weight: 300;
+      letter-spacing: 0.5px;
+      line-height: 1.6;
+    }
+
+    .about-text-group p {
+      font-size: 1.02rem;
+      font-weight: 300;
+      color: #000000;
+      line-height: 2.6;
+      letter-spacing: 0.6px;
+      text-align: left;
+    }
+
+    /* ================= 簡潔乾淨的大標題 ================= */
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: #fff;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #333;
+      padding-bottom: 0.4rem;
+      flex-shrink: 0;
+    }
+
+    .section-title .en-bold {
+      font-weight: 700;
+    }
+
+    /* ================= 第三頁：手作作品 ================= */
+    .works-slider-section {
+      background-color: #141414;
+      padding: 6.5rem 8% 2rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .slider-wrapper {
+      position: relative;
+      flex: 1;
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      min-height: 0;
+    }
+
+    .slides-container {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .slide-item {
+      min-width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 45% 52%;
+      gap: 3%;
+      align-items: center;
+    }
+
+    .slide-media-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      max-height: 520px;
+      background-color: #111;
+      border: 1px solid #2e2e2e;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slide-media-1 video {
+      width: 140%;
+      height: 140%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .slide-media-2 img, .slide-media-3 img, .slide-media-4 img {
+      width: 128%;
+      height: 128%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .slide-details {
+      height: 100%;
+      max-height: 520px;
+      overflow-y: auto;
+      padding-right: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      scrollbar-width: none;
+    }
+    .slide-details::-webkit-scrollbar {
+      display: none;
+    }
+
+    .slide-title {
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: #fff;
+      margin-bottom: 0.4rem;
+      border-bottom: 1px solid #222;
+      padding-bottom: 0.4rem;
+    }
+
+    .detail-section {
+      border-left: 2px solid #444;
+      padding-left: 1rem;
+    }
+
+    .detail-section h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.3rem;
+      letter-spacing: 0.5px;
+    }
+
+    .detail-section p {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: #ccc;
+      line-height: 1.6;
+      overflow-wrap: anywhere;
+    }
+
+    .highlight-box {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 0.8rem 1rem;
+      border: 1px solid #333;
+      margin-top: 0.4rem;
+    }
+
+    .view-original-btn {
+      display: inline-block;
+      font-size: 0.85rem;
+      color: #aaa;
+      text-decoration: none;
+      border-bottom: 1px solid #555;
+      padding-bottom: 2px;
+      margin-top: 1rem;
+      transition: color 0.3s, border-color 0.3s;
+    }
+
+    .view-original-btn:hover {
+      color: #fff;
+      border-color: #fff;
+    }
+
+    .works-slider-section .nav-zone {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      cursor: pointer;
+    }
+    .works-slider-section .prev-nav-zone { left: calc(2% - 20px); top: 0; }
+    .works-slider-section .next-nav-zone { right: calc(8% - 50px); top: 0; }
+
+    .works-slider-section .nav-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(5px);
+      opacity: 0;
+      transition: opacity 0.3s ease, background-color 0.3s ease;
+    }
+    .works-slider-section .nav-zone:hover .nav-btn { opacity: 1; }
+
+    /* ================= 第四頁：互動遊戲 ================= */
+    .game-section {
+      background-color: #0d0d0d;
+      padding: 7rem 9% 2.5rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* 📌 暖黃光暈改掛在底下頁碼列：中心落在頁碼列下緣以外，
+          只有柔和的上緣暈到頁碼附近，不會蓋到內文 */
+    .game-progress::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -110px;
+      width: 135%;
+      height: 190px;
+      transform: translateX(-50%);
+      filter: blur(14px);
+      background: radial-gradient(ellipse at center, rgba(227, 169, 75, 0.15) 0%, rgba(227, 169, 75, 0.08) 35%, rgba(227, 169, 75, 0.03) 60%, rgba(227, 169, 75, 0) 80%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .game-section .section-title {
+      position: relative;
+      z-index: 2;
+    }
+
+    .game-wrapper {
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      min-height: 0;
+    }
+
+    .game-grid {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 40% 44%;
+      column-gap: 10%;
+      align-items: center;
+    }
+
+    .game-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .game-photo-wrapper {
+      --img-w: 138.9%;     
+      --img-left: -19.4%;  
+      --img-top: -15.5%;   
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1.59 / 1;
+      background-color: #111;
+      border: 1px solid #2e2e2e;
+      overflow: hidden;
+    }
+
+    .game-slide-item {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.6s ease;
+    }
+
+    .game-slide-item.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .game-slide-item img {
+      position: absolute;
+      width: var(--img-w);
+      height: auto;
+      max-width: none;
+      left: var(--img-left);
+      top: var(--img-top);
+      display: block;
+    }
+
+    /* 📌 針對結算畫面 (ga5.png) 放大填滿黑框 */
+    .game-slide-item img[src*="ga5.png"] {
+      width: 100% !important;
+      height: 100% !important;
+      left: 0 !important;
+      top: 0 !important;
+      object-fit: cover !important;
+    }
+
+    .game-right {
+      position: relative;
+      height: 100%;
+      max-height: 520px;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .game-content-box {
+      position: relative;
+      flex: 1;
+      min-height: 0;
+      padding-bottom: 1.4rem;
+      -webkit-mask-image: linear-gradient(to bottom, #000 90%, transparent);
+      mask-image: linear-gradient(to bottom, #000 90%, transparent);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      scrollbar-width: none;
+    }
+    .game-content-box::-webkit-scrollbar {
+      display: none;
+    }
+
+    .game-detail-item {
+      position: relative;
+      margin-block: auto;
+      padding-top: 1rem;
+    }
+
+    .stage-label {
+      font-size: 0.78rem;
+      font-weight: 400;
+      letter-spacing: 4px;
+      line-height: 1.6;
+      color: #e3a94b;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .stage-label::before {
+      content: "";
+      display: block;
+      width: 1.6rem;
+      height: 1px;
+      background: #e3a94b;
+    }
+
+    .game-detail-item .slide-title {
+      position: relative;
+      z-index: 1;
+      font-size: 2.3rem;
+      font-weight: 300;
+      letter-spacing: 6px;
+      line-height: 1.3;
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 1.2rem;
+    }
+
+    .game-detail-item .slide-title::after {
+      content: "";
+      display: block;
+      width: 2.4rem;
+      height: 1px;
+      background: #e3a94b;
+      margin-top: 1rem;
+    }
+
+    .game-detail-item .detail-section {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 1.3rem;
+      border-left-color: rgba(227, 169, 75, 0.45);
+    }
+
+    .game-detail-item .detail-section p {
+      font-size: 0.88rem;
+      line-height: 1.85;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.4rem;
+    }
+
+    .tag-chip {
+      font-size: 0.78rem;
+      font-weight: 300;
+      line-height: 1.6;
+      letter-spacing: 1px;
+      color: #e8c27a;
+      border: 1px solid rgba(227, 169, 75, 0.4);
+      border-radius: 999px;
+      padding: 0.15rem 0.85rem;
+      background: rgba(227, 169, 75, 0.06);
+    }
+
+    .game-detail-item .view-original-btn {
+      color: #e8c27a;
+      border-bottom-color: rgba(227, 169, 75, 0.6);
+    }
+    .game-detail-item .view-original-btn:hover {
+      color: #fff;
+      border-color: #fff;
+    }
+
+    .game-progress {
+      flex-shrink: 0;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0.5rem;
+      padding-top: 1.2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .progress-item {
+      background: none;
+      border: none;
+      border-top: 2px solid #2e2e2e;
+      padding: 0.6rem 0 0;
+      text-align: left;
+      color: #666;
+      transition: color 0.4s ease, border-color 0.4s ease;
+      cursor: pointer;
+    }
+
+    .progress-item .p-num {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 2px;
+      line-height: 1.4;
+    }
+
+    .progress-item .p-name {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 300;
+      letter-spacing: 1px;
+      line-height: 1.6;
+    }
+
+    .progress-item:hover {
+      color: #bbb;
+    }
+
+    .progress-item.active {
+      color: #e8c27a;
+      border-top-color: #e3a94b;
+    }
+
+    /* 📌 左右切換按鈕設定 */
+    .game-section .nav-zone {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      cursor: pointer;
+    }
+    .game-section .prev-nav-zone { left: calc(4.5% - 50px); }
+    .game-section .next-nav-zone { right: calc(4.5% - 50px); }
+
+    .game-section .nav-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(5px);
+      opacity: 0;
+      transition: opacity 0.3s ease, background-color 0.3s ease;
+      pointer-events: auto;
+    }
+    .game-section .nav-zone:hover .nav-btn { opacity: 1; }
+
+    .sub-slides-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .sub-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.8s ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sub-slide.active {
+      opacity: 1;
+    }
+
+    .sub-next-btn {
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+      padding: 0.4rem 0.8rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      z-index: 5;
+      transition: background 0.3s;
+    }
+
+    .sub-next-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* 燈箱 Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-content-wrapper {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content-wrapper video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 2.5rem;
+      right: 3rem;
+      background: none;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s, transform 0.3s;
+      z-index: 1001;
+    }
+
+    /* ================= 📱 手機版 RWD（寬度 ≤ 768px） ================= */
+    @media (max-width: 768px) and (min-height: 501px) {
+      html {
+        height: auto;
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-text-size-adjust: 100%;
+      }
+      body {
+        height: auto;
+        overflow: visible;
+        line-height: 1.8;
+      }
+
+      section {
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+        min-height: 100svh;
+      }
+
+      /* 導覽列：縮小字級與間距，放不下時可橫向滑動 */
+      header {
+        height: 52px;
+        padding: 0 3%;
+        justify-content: center;
+      }
+      nav {
+        gap: 0.9rem;
+        max-width: 100%;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+      nav::-webkit-scrollbar { display: none; }
+      nav a, nav button {
+        font-size: 0.72rem;
+        white-space: nowrap;
+        padding: 0.6rem 0;
+      }
+
+      /* ---- 封面 ---- */
+      .hero-cover { padding: 64px 8% 0; }
+      .hero-watermark-k { left: 60%; top: 45%; }
+      .cover-center-wrapper {
+        margin-top: 0;
+        width: 100%;
+        align-items: flex-start;
+      }
+      .cover-content { order: 1; transform: none; margin-top: 0; }
+      .cover-my-stack { font-size: 1.5rem; }
+      .cover-title { font-size: 15vw; }
+      .cover-sub-info {
+        order: 2;
+        position: static;
+        transform: none;
+        left: auto;
+        top: auto;
+        margin-top: 1.4rem;
+        white-space: normal;
+      }
+      .cover-sub-info p { font-size: 0.85rem; line-height: 1.7; }
+
+      /* ---- 履歷 ---- */
+      .resume-section {
+        height: 100vh;
+        height: 100svh;
+        padding-top: 52px;
+      }
+      .resume-wrapper img {
+        width: 100%;
+        height: auto;
+        max-height: 100%;
+        object-fit: contain;
+      }
+      .resume-hint {
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+        text-align: center;
+        font-size: 0.68rem;
+        line-height: 1.5;
+        padding: 5px 10px;
+      }
+
+      /* ---- About Me：上下堆疊 ---- */
+      .about-section {
+        padding-top: 52px;
+        align-items: stretch;
+      }
+      .about-container {
+        height: auto;
+        min-height: calc(100svh - 52px);
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .about-left-group {
+        position: static;
+        width: 100%;
+        padding: 1.5rem 0 1rem;
+      }
+      .about-photo-wrapper {
+        height: 260px;
+        max-height: none;
+        justify-content: center;
+      }
+      .about-right-panel {
+        position: static;
+        width: 100%;
+        height: auto;
+        flex: 1;
+        padding: 2rem 7% 2.5rem;
+      }
+      .about-content-box { max-width: 100%; }
+      .about-header-row {
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 0.8rem;
+        margin-bottom: 1.6rem;
+        padding-bottom: 1.2rem;
+      }
+      .about-name { font-size: 1.6rem; letter-spacing: 3px; }
+      .about-name .about-name-en { display: block; margin-left: 0; font-size: 1rem; }
+      .about-contact-info { text-align: left; }
+      .about-contact-info p { font-size: 0.82rem; word-break: break-all; }
+      .about-text-group p { font-size: 0.95rem; line-height: 2.1; letter-spacing: 0.3px; }
+
+      /* ---- 共用標題 ---- */
+      .section-title { font-size: 1.25rem; }
+      .br-d { display: none; }  /* 手機直立版不強制換行，交給自動換行 */
+
+      /* ---- 手作作品：圖在上、文字在下 ---- */
+      .works-slider-section { padding: 4.5rem 5% 2rem; }
+      .slider-wrapper {
+        flex: none;
+        align-items: flex-start;
+        touch-action: pan-y;
+      }
+      .slides-container { height: auto; align-items: flex-start; }
+      .slide-item {
+        height: auto;
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+        align-items: start;
+      }
+      .slide-media-wrapper {
+        height: auto;
+        max-height: none;
+        aspect-ratio: 4 / 3;
+      }
+      .slide-details {
+        height: auto;
+        max-height: none;
+        overflow: visible;
+        padding-right: 0;
+        gap: 1rem;
+      }
+      .slide-title { font-size: 1.7rem; }
+      .detail-section h4 { font-size: 1rem; line-height: 1.8; }
+      .detail-section p { font-size: 0.88rem; }
+
+      .works-slider-section .nav-zone {
+        width: 44px;
+        height: 44px;
+        top: calc(33.5vw - 22px);
+      }
+      .works-slider-section .prev-nav-zone { left: 4px; top: calc(33.5vw - 22px); }
+      .works-slider-section .next-nav-zone { right: 4px; top: calc(33.5vw - 22px); }
+
+      /* ---- 數位作品：圖在上、文字在下 ---- */
+      .game-section {
+        padding: 4.5rem 5% 2rem;
+      }
+      .game-wrapper {
+        flex: none;
+        align-items: flex-start;
+        touch-action: pan-y;
+      }
+      .game-grid {
+        height: auto;
+        grid-template-columns: 1fr;
+        column-gap: 0;
+        row-gap: 1.2rem;
+        align-items: start;
+      }
+      .game-right {
+        height: auto;
+        max-height: none;
+      }
+      .game-content-box {
+        flex: none;
+        overflow: visible;
+        padding-bottom: 0.5rem;
+        -webkit-mask-image: none;
+        mask-image: none;
+      }
+      .game-detail-item { margin-block: 0; padding-top: 0.2rem; }
+      .game-detail-item .slide-title { font-size: 1.7rem; letter-spacing: 3px; }
+      .game-detail-item .detail-section { margin-bottom: 1rem; }
+      .game-detail-item .detail-section p { font-size: 0.86rem; line-height: 1.7; }
+      .stage-label { letter-spacing: 3px; }
+
+      .game-progress { gap: 0.3rem; padding-top: 0.8rem; }
+      .progress-item .p-num { font-size: 0.75rem; letter-spacing: 1px; }
+      .progress-item .p-name { font-size: 0.62rem; letter-spacing: 0; line-height: 1.5; }
+      .game-progress::after { bottom: -70px; height: 140px; }
+
+      .game-section .nav-zone {
+        width: 44px;
+        height: 44px;
+        top: calc(28vw - 22px);
+      }
+      .game-section .prev-nav-zone { left: 4px; }
+      .game-section .next-nav-zone { right: 4px; }
+
+      /* 手機沒有 hover，切換鈕常駐顯示並縮小 */
+      .works-slider-section .nav-btn,
+      .game-section .nav-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 1.1rem;
+        opacity: 0.9;
+        background: rgba(0, 0, 0, 0.45);
+      }
+
+      .sub-next-btn { bottom: 8px; right: 8px; padding: 0.3rem 0.7rem; font-size: 0.75rem; }
+
+      /* ---- 燈箱 ---- */
+      .modal-close-btn { top: 1rem; right: 1rem; width: 40px; height: 40px; }
+    }
+
+    /* ================= 📱 手機橫放（高度 ≤ 500px）：維持電腦版左右並排，整體等比縮小 ================= */
+    @media (max-height: 500px) and (orientation: landscape) {
+      html {
+        font-size: 12px;
+        height: 100vh;
+        height: 100dvh;
+        -webkit-text-size-adjust: 100%;
+      }
+      body { height: 100vh; height: 100dvh; }
+      section {
+        height: 100vh;
+        height: 100dvh;
+        min-height: 100dvh;
+      }
+
+      /* 觸控：由 JS 接管上下滑動換頁；可捲動的文字區仍可自己上下捲 */
+      main { touch-action: none; }
+      .slide-details, .game-content-box { touch-action: pan-y; }
+
+      header { height: 40px; padding: 0 2.5%; }
+      nav { gap: 1.6rem; }
+      nav a, nav button { font-size: 0.9rem; }
+
+      /* ---- 封面 ---- */
+      .cover-center-wrapper { margin-top: 20px; }
+      .cover-content { transform: translateX(-15vw); margin-top: 20px; }
+      .cover-my-stack { font-size: 1.6rem; }
+      .cover-sub-info { top: calc(50% - 20px); }
+      .cover-sub-info p { font-size: 0.9rem; }
+
+      /* ---- 履歷 ---- */
+      .resume-section { padding-top: 40px; }
+      .resume-hint { bottom: 8px; right: 12px; font-size: 0.7rem; padding: 4px 10px; }
+
+      /* ---- About Me ---- */
+      .about-left-group { padding-top: 48px; }
+      .about-photo-wrapper { height: 68%; max-height: 300px; }
+      .about-right-panel { padding: 48px 6% 0 6%; }
+      .about-header-row { margin-bottom: 1.4rem; padding-bottom: 1rem; }
+      .about-name { font-size: 1.8rem; }
+      .about-name .about-name-en { font-size: 1rem; }
+      .about-birth { margin-top: 0.4rem; }
+      .about-text-group p { font-size: 1rem; line-height: 2.1; }
+
+      /* ---- 共用標題 ---- */
+      .section-title { font-size: 1.3rem; margin-bottom: 0.5rem; padding-bottom: 0.2rem; }
+
+      /* ---- 手作作品 ---- */
+      .works-slider-section { padding: 3.6rem 6% 1rem; }
+      .slide-details { gap: 0.9rem; padding-right: 2.4rem; }
+      .slide-title { font-size: 1.8rem; margin-bottom: 0.2rem; padding-bottom: 0.2rem; }
+      .detail-section h4 { font-size: 1rem; line-height: 1.6; margin-bottom: 0.1rem; }
+      .detail-section p { font-size: 0.95rem; line-height: 1.6; }
+      .highlight-box { padding: 0.5rem 0.7rem; }
+      .view-original-btn { font-size: 0.85rem; margin-top: 0.5rem; }
+
+      .works-slider-section .nav-zone { width: 36px; }
+      .works-slider-section .prev-nav-zone { left: 0; }
+      .works-slider-section .next-nav-zone { right: 0; }
+
+      /* ---- 數位作品 ---- */
+      .game-section { padding: 3.6rem 7% 0.8rem; }
+      .game-detail-item { padding-top: 0.2rem; }
+      .stage-label { font-size: 0.8rem; letter-spacing: 3px; margin-bottom: 0.4rem; }
+      .game-detail-item .slide-title { font-size: 1.8rem; letter-spacing: 4px; margin-bottom: 0.6rem; }
+      .game-detail-item .slide-title::after { margin-top: 0.5rem; }
+      .game-detail-item .detail-section { margin-bottom: 0.7rem; }
+      .game-detail-item .detail-section p { font-size: 0.95rem; line-height: 1.6; }
+      .tag-chip { font-size: 0.8rem; padding: 0.05rem 0.6rem; }
+      .game-progress { padding-top: 0.6rem; gap: 0.3rem; }
+      .progress-item { padding-top: 0.3rem; }
+      .progress-item .p-num { font-size: 0.8rem; line-height: 1.3; }
+      .progress-item .p-name { font-size: 0.7rem; line-height: 1.4; letter-spacing: 0; }
+      .game-progress::after { bottom: -60px; height: 120px; }
+
+      .game-section .nav-zone { width: 40px; }
+      .game-section .prev-nav-zone { left: -43px; }
+      .game-section .next-nav-zone { right: -43px; }
+
+      /* 手機沒有 hover，切換鈕常駐顯示並縮小 */
+      .works-slider-section .nav-btn,
+      .game-section .nav-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
+        opacity: 0.7;
+        background: rgba(0, 0, 0, 0.45);
+      }
+      .sub-next-btn { bottom: 8px; right: 8px; padding: 0.2rem 0.6rem; font-size: 0.8rem; }
+
+      /* ---- 燈箱 ---- */
+      .modal-close-btn { top: 0.8rem; right: 1rem; width: 36px; height: 36px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <button onclick="scrollToSection(0)">Home</button>
+      <button onclick="scrollToSection(1)">Resume</button>
+      <button onclick="scrollToSection(2)">About Me</button>
+      <button onclick="scrollToSection(3)">Physical Works</button>
+      <button onclick="scrollToSection(4)">Digital Works</button>
+    </nav>
+  </header>
+
+  <main id="main-view">
+    
+    <!-- 第一頁：封面 -->
+    <section class="hero-cover" id="cover">
+      <div class="hero-watermark-k">K</div>
+      <div class="cover-center-wrapper">
+        <div class="cover-sub-info">
+          <p>Product Design & Material Structure</p>
+          <p>Visual & Spatial Design</p>
+        </div>
+        <div class="cover-content">
+          <div class="cover-my-stack">
+            <span>M</span>
+            <span>Y</span>
+          </div>
+          <h1 class="cover-title">Portfolio</h1>
+        </div>
+      </div>
+    </section>
+
+    <!-- 履歷頁面 -->
+    <section class="resume-section" id="resume">
+      <div class="resume-container">
+        <div class="resume-wrapper" id="resumeWrapper">
+          <img src="resume.svg" alt="Resume - 陳姵宇" id="resumeImg" onerror="this.onerror=null; this.src='resume.jpg';">
+        </div>
+        <div class="resume-hint">Notice: Scroll or pinch to zoom, click and drag to pan</div>
+      </div>
+    </section>
+
+    <!-- 第二頁：About Me 個人介紹 -->
+    <section class="about-section" id="about">
+      <div class="about-container">
+        <div class="about-left-group">
+          <div class="about-photo-wrapper">
+            <img src="K.jpg" alt="陳姵宇 Kelly Chen">
+          </div>
+        </div>
+        <div class="about-right-panel">
+          <div class="about-content-box">
+            <div class="about-header-row">
+              <div class="about-name-group">
+                <h2 class="about-name">陳姵宇<span class="about-name-en">Kelly Chen</span></h2>
+                <p class="about-birth">2005 / 09 / 09</p>
+              </div>
+              <div class="about-contact-info">
+                <p>+886 936-163-341</p>
+                <p>cpeiyu616@gmail.com</p>
+              </div>
+            </div>
+            <div class="about-text-group">
+              <p>
+                曾就讀實踐大學工業設計學系。<br>
+                在立體結構實作中，逐漸釐清自己真正熱愛的方向——<br>
+                比起純粹的機構，更傾向於版面編輯、視覺傳達與材質美學的結合。<br>
+                現就讀台北市立大學學習與媒材設計學系。<br>
+                在這裡，我將過去扎實的空間結構邏輯，<br>
+                轉化為更具敘事性與互動感的視覺體驗。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 第三頁：手作作品 -->
+    <section class="works-slider-section" id="works">
+      <h2 class="section-title"><span class="en-bold">Physical Works </span> </h2>
+      <div class="slider-wrapper">
+        <div class="slides-container" id="slidesContainer">
+          
+          <!-- 作品 1：綻放 -->
+          <div class="slide-item">
+            <div class="slide-media-wrapper slide-media-1">
+              <video src="blooming.mp4" autoplay loop muted playsinline></video>
+            </div>
+            <div class="slide-details">
+              <h3 class="slide-title">綻放</h3>
+              <div class="detail-section">
+                <h4>主要材料</h4><p>絲襪布、壓克力</p>
+              </div>
+              <div class="detail-section">
+                <h4>設計理念</h4><p>藉由光影的位置移動及花朵的旋轉，<br class="br-d">使影子產生大小變化呈現花朵綻放的姿態。</p>
+              </div>
+              <div class="detail-section">
+                <h4>設計小巧思</h4>
+                <div class="highlight-box">
+                  <p>玫瑰花以鐵絲製成骨架後包上絲襪布組合而成，<br class="br-d">光影呈現會因花瓣重疊程度而有深淺差異。</p>
+                  <a href="javascript:void(0);" onclick="openVideoModal()" class="view-original-btn">Watch the full light and shadow animation ↗</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 作品 2：平衡 -->
+          <div class="slide-item">
+            <div class="slide-media-wrapper slide-media-2">
+              <img src="balance.jpg" alt="平衡 展示圖">
+            </div>
+            <div class="slide-details">
+              <h3 class="slide-title">平衡</h3>
+              <div class="detail-section"><h4>主要材料</h4><p>木條、鐵</p></div>
+              <div class="detail-section"><h4>設計理念</h4><p>利用長短不一的木條以錯位方式排列製成坐墊。</p></div>
+              <div class="detail-section"><h4>困難點</h4><p>1.為使坐墊達成平衡不傾斜，木條的重量分布難以計算。<br>2.木條的卡榫設計因每層擺放方式不同(立著擺、躺著擺)，<br class="br-d">凹槽深度難以計算。</p></div>
+              <div class="detail-section"><h4>解決方法</h4><p>先將最底層木條固定於底座，再依序擺放後面幾層。</p></div>
+            </div>
+          </div>
+
+          <!-- 作品 3：錯位 -->
+          <div class="slide-item">
+            <div class="slide-media-wrapper slide-media-3">
+              <img src="錯位.jpg" alt="錯位 展示圖">
+            </div>
+            <div class="slide-details">
+              <h3 class="slide-title">錯位</h3>
+              <div class="detail-section"><h4>主要材料</h4><p>木頭、銅線、塑膠球</p></div>
+              <div class="detail-section"><h4>設計理念</h4><p>讓主體以錯位且看起來懸浮的方式呈現幾何。</p></div>
+              <div class="detail-section"><h4>困難點</h4><p>上半部主體重量較重會使整體向後傾倒<br class="br-d">(上下部分主體位置不可對調，因呈現效果較不佳)。</p></div>
+              <div class="detail-section"><h4>解決方法</h4><p>上半部主體削掉一部分去平衡，<br class="br-d">塑膠球、銅線在下半部主體作配重。</p></div>
+              <div class="detail-section"><h4>設計小巧思</h4><p>當初設計時上半部主體並沒有削掉一角的想法，<br class="br-d">是在打磨木頭時意外削掉，索性將錯就錯多削一點，<br class="br-d">結果成品意外不錯也解決配重問題。</p></div>
+            </div>
+          </div>
+
+          <!-- 作品 4：Changing -->
+          <div class="slide-item">
+            <div class="slide-media-wrapper slide-media-4">
+              <img src="三十六計.jpg" alt="Changing 展示圖">
+            </div>
+            <div class="slide-details">
+              <h3 class="slide-title">Changing</h3>
+              <div class="detail-section"><h4>主要材料</h4><p>絲襪布、鐵、釣魚線</p></div>
+              <div class="detail-section"><h4>設計理念</h4><p>利用絲襪布的透光性使作品呈現出不同深淺效果。</p></div>
+              <div class="detail-section"><h4>困難點</h4><p>釣魚線綁在鐵架上易彈開及滑動。</p></div>
+              <div class="detail-section"><h4>解決方法</h4><p>用銼刀在欲綁線處劃出淺刻痕，使釣魚線能固定住。</p></div>
+            </div>
+          </div>
+
+        </div>
+        <div class="nav-zone prev-nav-zone" onclick="prevSlide()"><div class="nav-btn">❮</div></div>
+        <div class="nav-zone next-nav-zone" onclick="nextSlide()"><div class="nav-btn">❯</div></div>
+      </div>
+    </section>
+
+    <!-- 第四頁：互動遊戲 -->
+    <section class="game-section" id="game">
+      <h2 class="section-title"><span class="en-bold">Digital Works </span> </h2>
+
+      <div class="game-wrapper">
+        <div class="game-grid">
+
+          <div class="game-left">
+            <div class="game-photo-wrapper">
+              <div class="game-slide-item active">
+                <div class="sub-slides-container" id="subSlide0">
+                  <div class="sub-slide active"><img src="typing game/cover.png" alt="深夜拉麵 封面"></div>
+                  <div class="sub-slide"><img src="typing game/ga1.png" alt="故事 第一頁"></div>
+                  <div class="sub-slide"><img src="typing game/ga2.png" alt="故事 第二頁"></div>
+                  <div class="sub-slide"><img src="typing game/ga3.png" alt="故事 第三頁"></div>
+                  <div class="sub-slide"><img src="typing game/ga4.png" alt="關卡選單"></div>
+                  <button class="sub-next-btn" onclick="nextSubSlide('subSlide0')">Next</button>
+                </div>
+              </div>
+
+              <div class="game-slide-item"><img src="typing game/g1.png" alt="第一關 學徒基本功"></div>
+              <div class="game-slide-item"><img src="typing game/g2.png" alt="第二關 麵碗地鼠"></div>
+              <div class="game-slide-item"><img src="typing game/g3.png" alt="第三關 看圖點餐"></div>
+              <div class="game-slide-item"><img src="typing game/g4.png" alt="第四關 外送大賽"></div>
+              <div class="game-slide-item"><img src="typing game/ga5.png" alt="闖關成功 結算畫面"></div>
+            </div>
+          </div>
+
+          <div class="game-right">
+            <div class="game-content-box" id="gameContentBox">
+              <div class="game-detail-item" style="display:block;">
+                <p class="stage-label">OVERVIEW</p>
+                <h3 class="slide-title">深夜拉麵</h3>
+                <div class="detail-section"><h4>設計理念</h4><p>專為完全不會英打的初學者設計，把枯燥的練習變成深夜食堂的接單小遊戲。</p></div>
+                <div class="detail-section"><h4>訓練路線</h4><p>短單字、單鍵、拼字、整句，四關由淺入深。</p></div>
+                <a href="https://cpeiyu616-dev.github.io/game/" target="_blank" class="view-original-btn" style="margin-top:0.4rem;">Play Game Online ↗</a>
+              </div>
+
+              <div class="game-detail-item" style="display:none;">
+                <p class="stage-label">STAGE 01 / 04</p>
+                <h3 class="slide-title">學徒基本功</h3>
+                <div class="detail-section"><h4>玩法</h4><p>照著訂單打出單字出餐，共 8 張。</p></div>
+                <div class="detail-section"><h4>訓練內容</h4><p>認識字母位置、練習 Shift 切換大小寫；大小寫打錯算失誤一次。</p></div>
+                <div class="detail-section"><h4>新手協助</h4><p>鍵盤亮出下一個鍵，需大寫時 Shift 也會亮；打錯只退回一個字。</p></div>
+                <div class="tag-row">
+                  <span class="tag-chip">字母位置</span>
+                  <span class="tag-chip">Shift 大小寫</span>
+                  <span class="tag-chip">短單字</span>
+                </div>
+              </div>
+
+              <div class="game-detail-item" style="display:none;">
+                <p class="stage-label">STAGE 02 / 04</p>
+                <h3 class="slide-title">麵碗地鼠</h3>
+                <div class="detail-section"><h4>玩法</h4><p>九宮格冒出麵碗，按下格子上的字母敲掉它，限時 60 秒。</p></div>
+                <div class="detail-section"><h4>訓練內容</h4><p>九宮格對應 Q W E / A S D / Z X C，練習單鍵反應與左手鍵位記憶。</p></div>
+                <div class="detail-section"><h4>新手協助</h4><p>漏接不會失敗，只讓連擊歸零；每一格有各自的音階。</p></div>
+                <div class="tag-row">
+                  <span class="tag-chip">鍵位記憶</span>
+                  <span class="tag-chip">單鍵反應</span>
+                  <span class="tag-chip">左手分工</span>
+                </div>
+              </div>
+
+              <div class="game-detail-item" style="display:none;">
+                <p class="stage-label">STAGE 03 / 04</p>
+                <h3 class="slide-title">看圖點餐</h3>
+                <div class="detail-section"><h4>玩法</h4><p>看圖片和中文，拼出英文菜名，服務 8 位客人。</p></div>
+                <div class="detail-section"><h4>訓練內容</h4><p>把單字和圖像連結，練習完整拼字與連續輸入。</p></div>
+                <div class="detail-section"><h4>新手協助</h4><p>每 4 秒浮現一個字母提示；拼錯只退回一個字。</p></div>
+                <div class="tag-row">
+                  <span class="tag-chip">拼字記憶</span>
+                  <span class="tag-chip">英文詞彙</span>
+                  <span class="tag-chip">連續輸入</span>
+                </div>
+              </div>
+
+              <div class="game-detail-item" style="display:none;">
+                <p class="stage-label">STAGE 04 / 04</p>
+                <h3 class="slide-title">外送大賽</h3>
+                <div class="detail-section"><h4>玩法</h4><p>打完整句英文讓機車前進，與對手比誰先送達，共三場。</p></div>
+                <div class="detail-section"><h4>訓練內容</h4><p>從單字進階到整句，包含首字大寫、標點與空白鍵。</p></div>
+                <div class="detail-section"><h4>難度設計</h4><p>對手由慢到快，新手也追得上；打錯的字要重打。</p></div>
+                <div class="tag-row">
+                  <span class="tag-chip">整句輸入</span>
+                  <span class="tag-chip">標點符號</span>
+                  <span class="tag-chip">穩定節奏</span>
+                </div>
+              </div>
+
+              <div class="game-detail-item" style="display:none;">
+                <p class="stage-label">RESULT</p>
+                <h3 class="slide-title">闖關成功</h3>
+                <div class="detail-section"><h4>結算數據</h4><p>顯示分數、最高連擊、WPM 與準確率，並給一到三顆星。</p></div>
+                <div class="detail-section"><h4>WPM 是什麼</h4><p>每分鐘打出的字數（正確字元 ÷ 5 ÷ 分鐘）。</p></div>
+                <div class="detail-section"><h4>為什麼要有結算</h4><p>看見上的進步，就會想再挑戰一次。</p></div>
+                <div class="tag-row">
+                  <span class="tag-chip">WPM 速度</span>
+                  <span class="tag-chip">準確率</span>
+                  <span class="tag-chip">星等回饋</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="game-progress" id="gameProgress">
+              <button class="progress-item active" onclick="goToGameSlide(0)"><span class="p-num">00</span><span class="p-name">簡介</span></button>
+              <button class="progress-item" onclick="goToGameSlide(1)"><span class="p-num">01</span><span class="p-name">基本功</span></button>
+              <button class="progress-item" onclick="goToGameSlide(2)"><span class="p-num">02</span><span class="p-name">麵碗地鼠</span></button>
+              <button class="progress-item" onclick="goToGameSlide(3)"><span class="p-num">03</span><span class="p-name">看圖點餐</span></button>
+              <button class="progress-item" onclick="goToGameSlide(4)"><span class="p-num">04</span><span class="p-name">外送大賽</span></button>
+              <button class="progress-item" onclick="goToGameSlide(5)"><span class="p-num">05</span><span class="p-name">結算</span></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-zone prev-nav-zone" onclick="prevGameSlide()"><div class="nav-btn">❮</div></div>
+        <div class="nav-zone next-nav-zone" onclick="nextGameSlide()"><div class="nav-btn">❯</div></div>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="modal-overlay" id="videoModal">
+    <button class="modal-close-btn" onclick="closeVideoModal()">✕</button>
+    <div class="modal-content-wrapper">
+      <video src="blooming.mp4" autoplay loop muted playsinline></video>
+    </div>
+  </div>
+
+  <script>
+    const sections = document.querySelectorAll('main > section');
+    let currentSectionIndex = 0;
+    let lastEnteredIndex = 0;
+    let navLock = false;
+    let navLockTimer;
+
+    /* 直立手機 / 窄視窗 = 上下堆疊版；手機橫放 = 電腦版縮小版 */
+    const STACK_QUERY = '(max-width: 768px) and (min-height: 501px)';
+    const COMPACT_QUERY = '(max-height: 500px) and (orientation: landscape)';
+    const stackMQ = window.matchMedia(STACK_QUERY);
+    const compactMQ = window.matchMedia(COMPACT_QUERY);
+
+    function scrollToSection(index) {
+      if (index < 0 || index >= sections.length) return;
+      currentSectionIndex = index;
+      navLock = true;
+      clearTimeout(navLockTimer);
+      navLockTimer = setTimeout(() => { navLock = false; }, 900);
+      sections[currentSectionIndex].scrollIntoView({ behavior: 'smooth' });
+      onEnterSection(index);
+    }
+
+    /* 進入某一頁時要做的初始化（手機自然捲動時也會呼叫） */
+    function onEnterSection(index) {
+      lastEnteredIndex = index;
+
+      if (index === 3) {
+        currentIndex = 0;
+        updateSlider();
+        resetAutoSlide();
+      }
+
+      if (index === 1) {
+        scale = 1;
+        pointX = 0;
+        pointY = 0;
+        updateResumeTransform();
+      }
+
+      /* 📌 進入數位作品：回到簡介第一頁（深夜拉麵封面）再開始輪播；離開則停止計時 */
+      if (index === 4) {
+        gameCurrentIndex = 0;
+        updateGameSlider();
+        showSub('subSlide0', 0);
+        startSubTimer('subSlide0');
+      } else {
+        clearInterval(subTimers['subSlide0']);
+      }
+    }
+
+    /* ---------- 完全鎖定滾輪換頁：只允許在內容區塊內上下滾動檢視 ---------- */
+    window.addEventListener('wheel', (e) => {
+      if (document.getElementById('videoModal').classList.contains('active')) return;
+      if (stackMQ.matches) return;
+
+      const target = e.target;
+      const isInsideDetails = target.closest('.slide-details') || target.closest('.game-content-box');
+      const isInsideResume = target.closest('#resumeImg');
+
+      if (isInsideDetails || isInsideResume) {
+        return;
+      }
+
+      e.preventDefault();
+    }, { passive: false });
+
+    /* ---------- 履歷圖片互動縮放與平移 ---------- */
+    const resumeImg = document.getElementById('resumeImg');
+    const resumeWrapper = document.getElementById('resumeWrapper');
+    let scale = 1;
+    let pointX = 0;
+    let pointY = 0;
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+
+    function updateResumeTransform() {
+      resumeImg.style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
+      updateResumeTouchAction();
+    }
+
+    /* 堆疊版：未放大時允許瀏覽器上下捲動換頁；放大後或橫放時由 JS 接管觸控 */
+    function updateResumeTouchAction() {
+      const zoomed = scale > 1.01;
+      resumeImg.style.touchAction = (zoomed || compactMQ.matches) ? 'none' : 'pan-y';
+    }
+
+    resumeImg.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const zoomIntensity = 0.1;
+      if (e.deltaY < 0) {
+        scale = Math.min(scale + zoomIntensity, 5);
+      } else {
+        scale = Math.max(scale - zoomIntensity, 1);
+        if (scale === 1) {
+          pointX = 0;
+          pointY = 0;
+        }
+      }
+      updateResumeTransform();
+    }, { passive: false });
+
+    resumeImg.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      startX = e.clientX - pointX;
+      startY = e.clientY - pointY;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      pointX = e.clientX - startX;
+      pointY = e.clientY - startY;
+      updateResumeTransform();
+    });
+
+    window.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+
+    let initialPinchDistance = null;
+    resumeImg.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1 && scale > 1) {
+        isDragging = true;
+        startX = e.touches[0].clientX - pointX;
+        startY = e.touches[0].clientY - pointY;
+      } else if (e.touches.length === 2) {
+        initialPinchDistance = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+      }
+    });
+
+    resumeImg.addEventListener('touchmove', (e) => {
+      if (isDragging && e.touches.length === 1) {
+        pointX = e.touches[0].clientX - startX;
+        pointY = e.touches[0].clientY - startY;
+        updateResumeTransform();
+      } else if (e.touches.length === 2 && initialPinchDistance) {
+        const currentDistance = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+        const factor = currentDistance / initialPinchDistance;
+        scale = Math.min(Math.max(scale * factor, 1), 5);
+        initialPinchDistance = currentDistance;
+        updateResumeTransform();
+      }
+    });
+
+    ['touchend', 'touchcancel'].forEach((evt) => {
+      resumeImg.addEventListener(evt, () => {
+        isDragging = false;
+        initialPinchDistance = null;
+      });
+    });
+    updateResumeTouchAction();
+    compactMQ.addEventListener('change', updateResumeTouchAction);
+
+    /* ---------- 手作作品輪播 ---------- */
+    let currentIndex = 0;
+    const totalSlides = 4;
+    const slidesContainer = document.getElementById('slidesContainer');
+    let autoSlideTimer;
+
+    function updateSlider() {
+      slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % totalSlides;
+      updateSlider();
+      resetAutoSlide();
+    }
+
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      updateSlider();
+      resetAutoSlide();
+    }
+
+    function startAutoSlide() {
+      autoSlideTimer = setInterval(() => { nextSlide(); }, 23000);
+    }
+
+    function resetAutoSlide() {
+      clearInterval(autoSlideTimer);
+      startAutoSlide();
+    }
+
+    /* ---------- 遊戲區輪播 ---------- */
+    let gameCurrentIndex = 0;
+    const totalGameSlides = 6;
+    const gameSlideItems = document.querySelectorAll('.game-slide-item');
+    const gameDetailItems = document.querySelectorAll('.game-detail-item');
+    const gameProgressItems = document.querySelectorAll('.progress-item');
+
+    function updateGameSlider() {
+      gameSlideItems.forEach((item, idx) => {
+        item.classList.toggle('active', idx === gameCurrentIndex);
+      });
+
+      gameDetailItems.forEach((item, idx) => {
+        item.style.display = (idx === gameCurrentIndex) ? 'block' : 'none';
+      });
+
+      gameProgressItems.forEach((item, idx) => {
+        item.classList.toggle('active', idx === gameCurrentIndex);
+      });
+
+      document.getElementById('gameContentBox').scrollTop = 0;
+    }
+
+    function goToGameSlide(index) {
+      gameCurrentIndex = index;
+      updateGameSlider();
+    }
+
+    function nextGameSlide() {
+      gameCurrentIndex = (gameCurrentIndex + 1) % totalGameSlides;
+      updateGameSlider();
+    }
+
+    function prevGameSlide() {
+      gameCurrentIndex = (gameCurrentIndex - 1 + totalGameSlides) % totalGameSlides;
+      updateGameSlider();
+    }
+
+    /* ---------- 簡介頁小輪播 ---------- */
+    const subTimers = {};
+
+    function showSub(containerId, idx) {
+      const container = document.getElementById(containerId);
+      const subSlides = container.querySelectorAll('.sub-slide');
+      subSlides.forEach((s, i) => s.classList.toggle('active', i === idx));
+    }
+
+    function startSubTimer(containerId) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      const subSlides = container.querySelectorAll('.sub-slide');
+      clearInterval(subTimers[containerId]);
+      subTimers[containerId] = setInterval(() => {
+        const activeIdx = Array.from(subSlides).findIndex(s => s.classList.contains('active'));
+        showSub(containerId, (activeIdx + 1) % subSlides.length);
+      }, 4000);
+    }
+
+    function nextSubSlide(containerId) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      const subSlides = container.querySelectorAll('.sub-slide');
+      const activeIdx = Array.from(subSlides).findIndex(s => s.classList.contains('active'));
+      showSub(containerId, (activeIdx + 1) % subSlides.length);
+      startSubTimer(containerId);
+    }
+
+    /* 📌 不再於頁面載入時啟動簡介輪播，改為進入數位作品時才開始（見 scrollToSection） */
+
+    /* ---------- 燈箱與瀏覽器歷史紀錄 ---------- */
+    function openVideoModal() {
+      const modal = document.getElementById('videoModal');
+      modal.classList.add('active');
+      clearInterval(autoSlideTimer);
+      const modalVideo = modal.querySelector('video');
+      modalVideo.currentTime = 0;
+      modalVideo.play();
+
+      history.pushState({ modalOpen: true }, '');
+    }
+
+    function closeVideoModal() {
+      const modal = document.getElementById('videoModal');
+      if (modal.classList.contains('active')) {
+        modal.classList.remove('active');
+        const modalVideo = modal.querySelector('video');
+        modalVideo.pause();
+        startAutoSlide();
+      }
+    }
+
+    window.addEventListener('popstate', (e) => {
+      closeVideoModal();
+    });
+
+    /* ---------- 鍵盤上下鍵切換頁面 ---------- */
+    document.addEventListener('keydown', (e) => {
+      if (document.getElementById('videoModal').classList.contains('active')) {
+        if (e.key === 'Escape') {
+          history.back();
+        }
+        return;
+      }
+
+      if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+        e.preventDefault();
+        scrollToSection(currentSectionIndex + 1);
+      } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+        e.preventDefault();
+        scrollToSection(currentSectionIndex - 1);
+      }
+
+      if (currentSectionIndex === 3) {
+        if (e.key === 'ArrowRight') nextSlide();
+        if (e.key === 'ArrowLeft') prevSlide();
+      } else if (currentSectionIndex === 4) {
+        if (e.key === 'ArrowRight') nextGameSlide();
+        if (e.key === 'ArrowLeft') prevGameSlide();
+      }
+    });
+
+    /* ---------- 📱 手機版：左右滑動切換 + 自然捲動時追蹤目前頁面 ---------- */
+    const mobileMQ = stackMQ;
+
+    function addSwipe(el, onLeft, onRight) {
+      if (!el) return;
+      let sx = 0, sy = 0;
+      el.addEventListener('touchstart', (e) => {
+        sx = e.touches[0].clientX;
+        sy = e.touches[0].clientY;
+      }, { passive: true });
+      el.addEventListener('touchend', (e) => {
+        const t = e.changedTouches[0];
+        const dx = t.clientX - sx;
+        const dy = t.clientY - sy;
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+          if (dx < 0) onLeft(); else onRight();
+        }
+      }, { passive: true });
+    }
+
+    addSwipe(document.querySelector('.slider-wrapper'), nextSlide, prevSlide);
+    addSwipe(document.querySelector('.game-wrapper'), nextGameSlide, prevGameSlide);
+
+    window.addEventListener('scroll', () => {
+      if (!mobileMQ.matches || navLock) return;
+      if (document.getElementById('videoModal').classList.contains('active')) return;
+
+      const line = window.innerHeight * 0.4;
+      let idx = 0;
+      sections.forEach((s, i) => {
+        if (s.getBoundingClientRect().top <= line) idx = i;
+      });
+
+      if (idx !== lastEnteredIndex) {
+        currentSectionIndex = idx;
+        onEnterSection(idx);
+      }
+    }, { passive: true });
+
+    /* ---------- 📱 手機橫放：上下滑動換頁（等同電腦版的上下鍵） ---------- */
+    (function () {
+      const mainEl = document.getElementById('main-view');
+      let sx = 0, sy = 0, tracking = false, scroller = null, startAtTop = false, startAtBottom = false;
+
+      mainEl.addEventListener('touchstart', (e) => {
+        if (e.touches.length !== 1) { tracking = false; return; }
+        tracking = true;
+        sx = e.touches[0].clientX;
+        sy = e.touches[0].clientY;
+        scroller = e.target.closest('.slide-details, .game-content-box');
+        if (scroller) {
+          startAtTop = scroller.scrollTop <= 0;
+          startAtBottom = scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 2;
+        }
+        // 記下觸控目標，放大中的履歷不換頁
+        mainEl._touchOnZoomedResume = !!e.target.closest('#resumeImg') && scale > 1.01;
+      }, { passive: true });
+
+      mainEl.addEventListener('touchend', (e) => {
+        if (!tracking) return;
+        tracking = false;
+        if (!compactMQ.matches) return;
+        if (document.getElementById('videoModal').classList.contains('active')) return;
+        if (mainEl._touchOnZoomedResume) return;
+
+        const t = e.changedTouches[0];
+        const dx = t.clientX - sx;
+        const dy = t.clientY - sy;
+        if (Math.abs(dy) < 60 || Math.abs(dy) < Math.abs(dx) * 1.5) return;
+
+        // 文字區還沒捲到頭／尾時，讓它自己捲，不換頁
+        if (scroller && scroller.scrollHeight > scroller.clientHeight + 2) {
+          if (dy < 0 && !startAtBottom) return;
+          if (dy > 0 && !startAtTop) return;
+        }
+        scrollToSection(currentSectionIndex + (dy < 0 ? 1 : -1));
+      }, { passive: true });
+
+      mainEl.addEventListener('touchcancel', () => { tracking = false; }, { passive: true });
+    })();
+
+    startAutoSlide();
+  </script>
+
+</body>
+</html>
